@@ -141,7 +141,7 @@ uint8_t path_finder_find_step(struct path_finder *path_finder, void *data)
 		run = 0;
 		path_finder->has_path = 0;
 	} else {
-		int32_t neighbors[4];
+		int32_t neighbors[8];
 		int32_t j;
 		int32_t tmp_g_score;
 		path_finder->state[current] = path_finder->state[current] & ~PATH_FINDER_MASK_OPEN;
@@ -162,10 +162,37 @@ uint8_t path_finder_find_step(struct path_finder *path_finder, void *data)
 		}
 		/* Bottom */
 		neighbors[3] = current + path_finder->cols;
+		if (path_finder->allow_diagonal_travel) {
+			/* Top Left */
+			if (current % path_finder->cols == 0) {
+				neighbors[4] = -1;
+			} else {
+				neighbors[4] = current - path_finder->cols - 1;
+			}
+			/* Top Right */
+			if ((current + 1) % path_finder->cols == 0) {
+				neighbors[5] = -1;
+			} else {
+				neighbors[5] = current - path_finder->cols + 1;
+			}
+			/* Bottom Left */
+			if (current % path_finder->cols == 0) {
+				neighbors[6] = -1;
+			} else {
+				neighbors[6] = current + path_finder->cols - 1;
+			}
+			/* Bottom Right */
+			if ((current + 1) % path_finder->cols == 0) {
+				neighbors[7] = -1;
+			} else {
+				neighbors[7] = current + path_finder->cols + 1;
+			}
+		}
 		/* Neighbors */
 		tmp_g_score = 0;
 		j = 0;
-		while (j < 4) {
+		int8_t n_neighbors = path_finder->allow_diagonal_travel ? 8 : 4;
+		while (j < n_neighbors) {
 			int32_t n;
 			n = neighbors[j];
 			if (n > -1 && n < count && (path_finder->state[n] & PATH_FINDER_MASK_CLOSED) == 0) {

@@ -2,6 +2,10 @@
 
 This is a minimal A* path finder implementation in C, without any dynamic memory allocation.
 
+#### Changes to original
+
+* Use `path_finder->allow_diagonal_travel = true` to also consider diagonal steps on the grid.
+
 ## Usage
 
 The maximum size of the map is defined by the macro `PATH_FINDER_MAX_CELLS`, which can be modified to support larger maps.

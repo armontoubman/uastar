@@ -154,6 +154,7 @@ int main(int argc, char **args)
 	path_finder.rows = height;
 	path_finder.fill_func = fill_cb;
 	path_finder.score_func = NULL;
+	path_finder.allow_diagonal_travel = true;
 	path_finder_fill(&path_finder);
 	path_finder_set_start(&path_finder, s_col, s_row);
 	path_finder_set_end(&path_finder, e_col, e_row);

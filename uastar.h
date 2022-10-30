@@ -22,6 +22,7 @@ the following restrictions:
 #define UASTAR_H
 
 #include <stdint.h>
+#include <stdbool.h>
 
 #ifndef PATH_FINDER_MAX_CELLS
 #define PATH_FINDER_MAX_CELLS 1024
@@ -40,6 +41,7 @@ struct path_finder {
 	uint8_t (*fill_func)(struct path_finder *path_finder, int32_t col, int32_t row);
 	int32_t (*score_func)(struct path_finder *path_finder, int32_t col, int32_t row, void *data);
 	void *data;
+	bool allow_diagonal_travel;
 };
 
 int32_t path_finder_get_score(struct path_finder *path_finder, int32_t col, int32_t row);
